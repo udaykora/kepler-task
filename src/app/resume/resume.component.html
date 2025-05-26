@@ -1,858 +1,873 @@
 <div>
-<div
-  *ngIf="previewopen"
-  class="h-[100%] w-[100%] pt-27 border border-solid border-gray-400 bg-gray-200"
->
-  <div *ngIf="logincomp" class="fixed inset-0 bg-black opacity-50 z-50"></div>
-
   <div
-    class="h-[120%] w-[60%] border border-solid border-gray-400 text-center mx-73 mb-30 bg-white"
+    *ngIf="previewopen"
+    class="h-[100%] w-[100%] pt-27 border border-solid border-gray-400 bg-gray-200"
   >
-    <input
-      [(ngModel)]="fullname"
-      class="text-2xl font-bold text-center mt-14 outline-none border-b border-b-gray-400 pl-40.5 pr-40.5 placeholder-gray-400"
-      type="text"
-      placeholder="Full Name"
-    />
-    <div>
-      <input
-        [(ngModel)]="email"
-        class="relative right-11 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder="Email"
-      />
-      <input
-        [(ngModel)]="mobileno"
-        class="relative left-12 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder="Mobile"
-      />
-      <input
-        [(ngModel)]="presentloc"
-        class="relative left-26 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder=" Present Location"
-      />
-    </div>
-
-    <textarea
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="2"
-      cdkAutosizeMaxRows="202"
-      [(ngModel)]="aboutyourself"
-      class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
-      placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
-    ></textarea>
-
-    <h1
-      class="font-bold relative right-51 text-[18px] font-serif"
-      [style.color]="work"
-    >
-      Work & Professional Experience
-    </h1>
-
-    <div *ngFor="let table of dataArray; let i = index" (click)="workexp(1)">
-      <table class="border ml-[11%] cursor-pointer mt-5">
-        <tbody>
-          <tr>
-            <td>
-              <input
-                [(ngModel)]="dataArray[i].from"
-                class="bg-gray-200 w-20 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                (ngModelChange)="updateit()"
-                placeholder="From"
-              />
-            </td>
-            <td>
-              <input
-                [(ngModel)]="dataArray[i].to"
-                class="w-20 bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                placeholder="To"
-                (ngModelChange)="updateit()"
-              />
-            </td>
-            <td>
-              <input
-                [(ngModel)]="dataArray[i].company"
-                class="bg-gray-200 w-90 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-                placeholder="Company/Organization Name"
-                (ngModelChange)="updateit()"
-              />
-            </td>
-            <td>
-              <input
-                [(ngModel)]="dataArray[i].location"
-                class="bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-                placeholder="Location"
-                (ngModelChange)="updateit()"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <input
-                [(ngModel)]="dataArray[i].designation"
-                class="w-full bg-gray-200 h-10 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-                placeholder="Designation"
-                (ngModelChange)="updateit()"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <textarea
-                [(ngModel)]="dataArray[i].something"
-                class="outline-none w-full"
-                (ngModelChange)="updateit()"
-                cdkTextareaAutosize
-                cdkAutosizeMinRows="5"
-                cdkAutosizeMaxRows="202"
-              ></textarea>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h1
-      class="font-bold relative right-77 text-[18px] mt-13 font-serif top-10"
-      [style.color]="ks"
-    >
-      Key Skills
-    </h1>
-
-    <table
-      class="border-collapse w-full max-w-md ml-[11%]"
-      (click)="workexp(7)"
-    >
-      <thead>
-        <tr>
-          <th class="p-3"></th>
-
-          <th class="text-center p-3 text-gray-400" colspan="3">Beginner</th>
-          <th class="text-center p-3 text-gray-400" colspan="3">Advanced</th>
-          <th class="text-center p-2 text-gray-400" colspan="2">Expert</th>
-          <th class="text-center p-2 text-gray-400" colspan="2">Guru</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let skill of selectedNumbers; let rowIndex = index">
-          <td class="border w-full h-full">
-            <input
-              [(ngModel)]="selectedNumbers[rowIndex]['skillname']"
-              class="outline-none font-serif bg-gray-200 p-2.5 placeholder-gray-400"
-              type="text"
-              [placeholder]="staticvalueks[rowIndex] || 'Skill Name'"
-              (input)="selectNumber()"
-            />
-          </td>
-
-          <td
-            *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index"
-            class="px-[21.7px] text-center transition-colors duration-300 border-t border-b"
-            [ngClass]="{
-              'bg-gray-300':
-                (selectedNumbers[rowIndex] &&
-                  num <= selectedNumbers[rowIndex]['range']) ||
-                selectedNumbers[rowIndex]['range'] == null,
-
-              'border-r': num === 3 || num === 6 || num === 8 || num === 10
-            }"
-            (click)="selectNumber(rowIndex, num)"
-          >
-            {{ num }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      class="font-bold relative right-72 text-[18px] mt-13 font-serif"
-      [style.color]="achievements1"
-    >
-      Achievements
-    </h1>
-    <textarea
-      [(ngModel)]="achievementsfield"
-      class="w-180 border relative left-3 resize-none overflow-hidden"
-      (click)="workexp(2)"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="5"
-      cdkAutosizeMaxRows="202"
-    ></textarea>
-
-    <h1
-      class="font-bold mt-13 relative right-34 font-serif"
-      [style.color]="links1"
-    >
-      Links (Github, Stack Overflow, Patents, Publications)
-    </h1>
-    <table class="border relative left-25" (click)="workexp(3)">
-      <tbody>
-        <tr class="border" *ngFor="let it of lfarray; let i = index">
-          <td class="border">
-            <input
-              [(ngModel)]="lfarray[i]['linkname']"
-              class="font-bold placeholder-gray-400"
-              type="text"
-              [placeholder]="static[i]?.[0] || 'Link Name'"
-              (ngModelChange)="linksfun()"
-            />
-          </td>
-          <td>
-            <input
-              [(ngModel)]="lfarray[i]['link']"
-              class="w-128.5 outline-none placeholder-gray-400"
-              type="text"
-              [placeholder]="static[i]?.[1] || 'Paste link here'"
-              (ngModelChange)="linksfun()"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      class="font-bold mt-13 relative right-59 font-serif"
-      [style.color]="eac"
-    >
-      Education and Certifications
-    </h1>
-    <table class="relative left-25" (click)="workexp(4)">
-      <tbody>
-        <tr *ngFor="let items of eacarray; let i = index">
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="eacarray[i]['graduationyear']"
-              class="text-center outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Graduation Year"
-              (ngModelChange)="eacf()"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="eacarray[i]['school']"
-              class="text-center w-82 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="School/College/University"
-              (ngModelChange)="eacf()"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="eacarray[i]['Degree']"
-              class="text-center w-25 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Degree"
-              (ngModelChange)="eacf()"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="eacarray[i]['Grade']"
-              class="text-center w-28 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Grade"
-              (ngModelChange)="eacf()"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1 class="font-bold mt-13 relative right-70 font-serif" [style.color]="lf">
-      Language Fluency
-    </h1>
-    <table class="border relative left-25" (click)="workexp(5)">
-      <tbody>
-        <tr *ngFor="let item of languagefluencyarr; let i = index">
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="languagefluencyarr[i]['language']"
-              class="font-bold placeholder-gray-400 text-black"
-              type="text"
-              [placeholder]="staticlanguage[i] || 'EX:Hindi'"
-              (ngModelChange)="lffun()"
-            />
-          </td>
-          <td class="pr-13.5 pl-13.5 border text-gray-400">
-            <input
-              [(ngModel)]="languagefluencyarr[i]['speak']"
-              type="checkbox"
-              (ngModelChange)="lffun()"
-            /><label> Speak</label>
-          </td>
-          <td class="pr-15.5 pl-15.5 border text-gray-400">
-            <input
-              [(ngModel)]="languagefluencyarr[i]['read']"
-              type="checkbox"
-              (ngModelChange)="lffun()"
-            /><label> Read</label>
-          </td>
-          <td class="pr-14 pl-14 border text-gray-400">
-            <input
-              [(ngModel)]="languagefluencyarr[i]['write']"
-              type="checkbox"
-              (ngModelChange)="lffun()"
-            /><label> Write</label>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      class="font-bold relative right-68 text-[18px] mt-13 font-serif overflow-hidden resize-none"
-      [style.color]="ih"
-    >
-      Interests/Hobbies
-    </h1>
-    <textarea
-      [(ngModel)]="interestshobbies"
-      class="outline-none w-181.5 border relative left-2 mb-17 overflow-hidden resize-none"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="5"
-      cdkAutosizeMaxRows="202"
-    ></textarea>
-  </div>
-  <div class="fixed flex flex-col space-y-2 right-71 bottom-130">
-    <h1></h1>
-    <div class="relative inline-block group">
-      <button (click)="previewdatasend()">
-        <img
-          class="w-7"
-          src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745038990/download_tumgfw.svg"
-          alt="Edit Icon"
-        />
-      </button>
-
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
-        Preview
-        <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
-        ></div>
-      </div>
-    </div>
-
-    <!-- Save Icon -->
-    <div class="relative inline-block group">
-      <a>
-        <img
-          (click)="maybe()"
-          class="w-7"
-          alt="Save Icon"
-          [src]="
-            issame
-              ? 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039169/save_ybayay.svg'
-              : 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1747405629/save_18202893_cuurhr.png'
-          "
-        />
-      </a>
-
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-block"
-      >
-        Save
-
-        <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600 inline-block"
-        ></div>
-      </div>
-
-      <div
-        *ngIf="saveload"
-        class="w-3 h-3 border-4 border-gray-500 border-t-transparent rounded-full animate-spin inline-block absolute bottom-2 left-8"
-      ></div>
-
-      <div
-        *ngIf="tick"
-        class="w-3 h-3 inline-block absolute bottom-5 left-8 text-green-500 text-2xl"
-      >
-        ✓
-      </div>
-    </div>
-
-    <!-- Share Icon -->
-    <div class="relative inline-block group">
-      <a>
-        <img
-          (click)="sharelink()"
-          class="w-7"
-          src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039326/share_axnfta.svg"
-          alt="Share Icon"
-        />
-      </a>
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
-        Share
-        <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
-        ></div>
-      </div>
-      <div *ngIf="showlinks == true" class="absolute">
-        <h1 class="text-[13px]">{{ link }}</h1>
-        <h1 *ngIf="clickingfornewlink == false" class="text-red-500">
-          Existing Link will Not Work
-        </h1>
-        <button class="inline-block text-green-500 cursor-pointer" (click)="copylink()">Copy</button>
-        <h1 class="inline-block mx-1 text-green-500">/</h1>
-        <button
-          *ngIf="clickingfornewlink"
-          (click)="clickingfornewlink = false"
-          class="inline-block cursor-pointer text-green-500"
-        >
-          New Link
-        </button>
-        <button
-          (click)="changelink()"
-          *ngIf="clickingfornewlink == false"
-          class="inline-block cursor-pointer text-green-500"
-        >
-          Ok, Get New Link
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  *ngIf="previewopen == false"
-  class="h-[100%] w-[100%] pt-27 border border-solid border-gray-400"
->
-  <div
-    class="min-h-[1920px] w-[60%] border border-solid border-gray-400 text-center mx-73 mb-30 bg-white"
-  >
-    <input
-      *ngIf="previewdata[0]"
-      class="text-2xl font-bold text-center mt-14 outline-none border-b border-b-gray-400 pl-40.5 pr-40.5 placeholder-gray-400"
-      type="text"
-      placeholder="Full Name"
-      [(ngModel)]="previewdata[0]"
-      readonly
-    />
-
-    <div class="mb-5">
-      <input
-        readonly
-        [ngStyle]="{ visibility: previewdata[1] ? 'visible' : 'hidden' }"
-        class="relative right-11 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder="Email"
-        [(ngModel)]="previewdata[1]"
-      />
-      <input
-        readonly
-        [ngStyle]="{ visibility: previewdata[2] ? 'visible' : 'hidden' }"
-        class="relative left-12 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder="Mobile"
-        [(ngModel)]="previewdata[2]"
-      />
-      <input
-        readonly
-        [ngStyle]="{ visibility: previewdata[3] ? 'visible' : 'hidden' }"
-        class="relative left-26 border-none outline-none placeholder-gray-400"
-        type="text"
-        placeholder=" Present Location"
-        [(ngModel)]="previewdata[3]"
-      />
-    </div>
-
-    <textarea
-      readonly
-      [ngStyle]="{ display: previewdata[4] ? 'block' : 'none' }"
-      [(ngModel)]="aboutyourself"
-      class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
-      placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="5"
-      cdkAutosizeMaxRows="202"
-    ></textarea>
-
-    <h1
-      *ngIf="previewdata[5].length > 0"
-      class="font-bold relative right-51 text-[18px] font-serif"
-      [style.color]="work"
-    >
-      Work & Professional Experience
-    </h1>
+    <div *ngIf="logincomp" class="fixed inset-0 bg-black opacity-50 z-50"></div>
 
     <div
-      *ngFor="let table of previewdata[5]; let i = index"
-      (click)="workexp(1)"
+      class="h-[120%] w-[60%] border border-solid border-gray-400 text-center mx-73 mb-30 bg-white"
     >
-      <table class="border ml-[11%] cursor-pointer mt-5">
+      <input
+        [(ngModel)]="fullname"
+        class="text-2xl font-bold text-center mt-14 outline-none border-b border-b-gray-400 pl-40.5 pr-40.5 placeholder-gray-400"
+        type="text"
+        placeholder="Full Name"
+      />
+      <div>
+        <input
+          [(ngModel)]="email"
+          class="relative right-11 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder="Email"
+        />
+        <input
+          [(ngModel)]="mobileno"
+          class="relative left-12 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder="Mobile"
+        />
+        <input
+          [(ngModel)]="presentloc"
+          class="relative left-26 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder=" Present Location"
+        />
+      </div>
+
+      <textarea
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="202"
+        [(ngModel)]="aboutyourself"
+        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
+        placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
+      ></textarea>
+
+      <h1
+        class="font-bold relative right-51 text-[18px] font-serif"
+        [style.color]="work"
+      >
+        Work & Professional Experience
+      </h1>
+
+      <div *ngFor="let table of dataArray; let i = index" (click)="workexp(1)">
+        <table class="border ml-[11%] cursor-pointer mt-5">
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  [(ngModel)]="dataArray[i].from"
+                  class="bg-gray-200 w-20 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  (ngModelChange)="updateit()"
+                  placeholder="From"
+                />
+              </td>
+              <td>
+                <input
+                  [(ngModel)]="dataArray[i].to"
+                  class="w-20 bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  placeholder="To"
+                  (ngModelChange)="updateit()"
+                />
+              </td>
+              <td>
+                <input
+                  [(ngModel)]="dataArray[i].company"
+                  class="bg-gray-200 w-90 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                  placeholder="Company/Organization Name"
+                  (ngModelChange)="updateit()"
+                />
+              </td>
+              <td>
+                <input
+                  [(ngModel)]="dataArray[i].location"
+                  class="bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                  placeholder="Location"
+                  (ngModelChange)="updateit()"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <input
+                  [(ngModel)]="dataArray[i].designation"
+                  class="w-full bg-gray-200 h-10 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                  placeholder="Designation"
+                  (ngModelChange)="updateit()"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <textarea
+                  [(ngModel)]="dataArray[i].something"
+                  class="outline-none w-full"
+                  (ngModelChange)="updateit()"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="5"
+                  cdkAutosizeMaxRows="202"
+                ></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h1
+        class="font-bold relative right-77 text-[18px] mt-13 font-serif top-10"
+        [style.color]="ks"
+      >
+        Key Skills
+      </h1>
+
+      <table
+        class="border-collapse w-full max-w-md ml-[11%]"
+        (click)="workexp(7)"
+      >
+        <thead>
+          <tr>
+            <th class="p-3"></th>
+
+            <th class="text-center p-3 text-gray-400" colspan="3">Beginner</th>
+            <th class="text-center p-3 text-gray-400" colspan="3">Advanced</th>
+            <th class="text-center p-2 text-gray-400" colspan="2">Expert</th>
+            <th class="text-center p-2 text-gray-400" colspan="2">Guru</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td>
+          <tr *ngFor="let skill of selectedNumbers; let rowIndex = index">
+            <td class="border w-full h-full">
               <input
-                readonly
-                [(ngModel)]="previewdata[5][i].from"
-                class="bg-gray-200 w-20 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-              />
-            </td>
-            <td>
-              <input
-                readonly
-                [(ngModel)]="previewdata[5][i].to"
-                class="w-20 bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                [(ngModel)]="selectedNumbers[rowIndex]['skillname']"
+                class="outline-none font-serif bg-gray-200 p-2.5 placeholder-gray-400"
                 type="text"
+                [placeholder]="staticvalueks[rowIndex] || 'Skill Name'"
+                (input)="selectNumber()"
               />
             </td>
-            <td>
-              <input
-                readonly
-                [(ngModel)]="previewdata[5][i].company"
-                class="bg-gray-200 w-90 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-              />
-            </td>
-            <td>
-              <input
-                readonly
-                [(ngModel)]="previewdata[5][i].location"
-                class="bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <input
-                readonly
-                [(ngModel)]="previewdata[5][i].designation"
-                class="w-full bg-gray-200 h-10 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
-                type="text"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <textarea
-                readonly
-                [(ngModel)]="dataArray[i].something"
-                class="outline-none w-full"
-                (ngModelChange)="updateit()"
-                cdkTextareaAutosize
-                cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="202"
-              ></textarea>
+
+            <td
+              *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index"
+              class="px-[21.7px] text-center transition-colors duration-300 border-t border-b"
+              [ngClass]="{
+                'bg-gray-300':
+                  (selectedNumbers[rowIndex] &&
+                    num <= selectedNumbers[rowIndex]['range']) ||
+                  selectedNumbers[rowIndex]['range'] == null,
+
+                'border-r': num === 3 || num === 6 || num === 8 || num === 10
+              }"
+              (click)="selectNumber(rowIndex, num)"
+            >
+              {{ num }}
             </td>
           </tr>
         </tbody>
       </table>
+
+      <h1
+        class="font-bold relative right-72 text-[18px] mt-13 font-serif"
+        [style.color]="achievements1"
+      >
+        Achievements
+      </h1>
+      <textarea
+        [(ngModel)]="achievementsfield"
+        class="w-180 border relative left-3 resize-none overflow-hidden"
+        (click)="workexp(2)"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="202"
+      ></textarea>
+
+      <h1
+        class="font-bold mt-13 relative right-34 font-serif"
+        [style.color]="links1"
+      >
+        Links (Github, Stack Overflow, Patents, Publications)
+      </h1>
+      <table class="border relative left-25" (click)="workexp(3)">
+        <tbody>
+          <tr class="border" *ngFor="let it of lfarray; let i = index">
+            <td class="border">
+              <input
+                [(ngModel)]="lfarray[i]['linkname']"
+                class="font-bold placeholder-gray-400"
+                type="text"
+                [placeholder]="static[i]?.[0] || 'Link Name'"
+                (ngModelChange)="linksfun()"
+              />
+            </td>
+            <td>
+              <input
+                [(ngModel)]="lfarray[i]['link']"
+                class="w-128.5 outline-none placeholder-gray-400"
+                type="text"
+                [placeholder]="static[i]?.[1] || 'Paste link here'"
+                (ngModelChange)="linksfun()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        class="font-bold mt-13 relative right-59 font-serif"
+        [style.color]="eac"
+      >
+        Education and Certifications
+      </h1>
+      <table class="relative left-25" (click)="workexp(4)">
+        <tbody>
+          <tr *ngFor="let items of eacarray; let i = index">
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="eacarray[i]['graduationyear']"
+                class="text-center outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Graduation Year"
+                (ngModelChange)="eacf()"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="eacarray[i]['school']"
+                class="text-center w-82 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="School/College/University"
+                (ngModelChange)="eacf()"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="eacarray[i]['Degree']"
+                class="text-center w-25 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Degree"
+                (ngModelChange)="eacf()"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="eacarray[i]['Grade']"
+                class="text-center w-28 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Grade"
+                (ngModelChange)="eacf()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        class="font-bold mt-13 relative right-70 font-serif"
+        [style.color]="lf"
+      >
+        Language Fluency
+      </h1>
+      <table class="border relative left-25" (click)="workexp(5)">
+        <tbody>
+          <tr *ngFor="let item of languagefluencyarr; let i = index">
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="languagefluencyarr[i]['language']"
+                class="font-bold placeholder-gray-400 text-black"
+                type="text"
+                [placeholder]="staticlanguage[i] || 'EX:Hindi'"
+                (ngModelChange)="lffun()"
+              />
+            </td>
+            <td class="pr-13.5 pl-13.5 border text-gray-400">
+              <input
+                [(ngModel)]="languagefluencyarr[i]['speak']"
+                type="checkbox"
+                (ngModelChange)="lffun()"
+              /><label> Speak</label>
+            </td>
+            <td class="pr-15.5 pl-15.5 border text-gray-400">
+              <input
+                [(ngModel)]="languagefluencyarr[i]['read']"
+                type="checkbox"
+                (ngModelChange)="lffun()"
+              /><label> Read</label>
+            </td>
+            <td class="pr-14 pl-14 border text-gray-400">
+              <input
+                [(ngModel)]="languagefluencyarr[i]['write']"
+                type="checkbox"
+                (ngModelChange)="lffun()"
+              /><label> Write</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        class="font-bold relative right-68 text-[18px] mt-13 font-serif overflow-hidden resize-none"
+        [style.color]="ih"
+      >
+        Interests/Hobbies
+      </h1>
+      <textarea
+        [(ngModel)]="interestshobbies"
+        class="outline-none w-181.5 border relative left-2 mb-17 overflow-hidden resize-none"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="202"
+      ></textarea>
     </div>
+    <div class="fixed flex flex-col space-y-2 right-71 bottom-130">
+      <h1></h1>
+      <div class="relative inline-block group">
+        <button (click)="previewdatasend()">
+          <img
+            class="w-7"
+            src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745038990/download_tumgfw.svg"
+            alt="Edit Icon"
+          />
+        </button>
 
-    <h1
-      *ngIf="previewdata[6].length > 0"
-      class="font-bold relative right-77 text-[18px] mt-13 font-serif top-10"
-      [style.color]="ks"
-    >
-      Key Skills
-    </h1>
+        <div
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        >
+          Preview
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
+          ></div>
+        </div>
+      </div>
 
-    <table
-      class="border-collapse w-full max-w-md ml-[11%]"
-      (click)="workexp(7)"
-    >
-      <thead>
-        <tr *ngIf="previewdata[6].length > 0">
-          <th class="p-3"></th>
-          <th class="text-center p-3 text-gray-400" colspan="3">Beginner</th>
-          <th class="text-center p-3 text-gray-400" colspan="3">Advanced</th>
-          <th class="text-center p-2 text-gray-400" colspan="2">Expert</th>
-          <th class="text-center p-2 text-gray-400" colspan="2">Guru</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let skill of previewdata[6]; let rowIndex = index">
-          <td class="border w-full h-full">
-            <input
-              [(ngModel)]="previewdata[6][rowIndex]['skillname']"
-              class="outline-none font-serif bg-gray-200 p-2.5 placeholder-gray-400"
-              type="text"
-              [placeholder]="staticvalueks[rowIndex] || 'Skill Name'"
-              readonly
-            />
-          </td>
-          <td
-            *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index"
-            class="px-[21.7px] text-center transition-colors duration-300 border-t border-b"
-            [ngClass]="{
-              'bg-gray-300':
-                previewdata[6][rowIndex] &&
-                num <= previewdata[6][rowIndex]['range'],
-              'border-r': num === 3 || num === 6 || num === 8 || num === 10
-            }"
+      <!-- Save Icon -->
+      <div class="relative inline-block group">
+        <a>
+          <img
+            (click)="maybe()"
+            class="w-7"
+            alt="Save Icon"
+            [src]="
+              issame
+                ? 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039169/save_ybayay.svg'
+                : 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1747405629/save_18202893_cuurhr.png'
+            "
+          />
+        </a>
+
+        <div
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-block"
+        >
+          Save
+
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600 inline-block"
+          ></div>
+        </div>
+
+        <div
+          *ngIf="saveload"
+          class="w-3 h-3 border-4 border-gray-500 border-t-transparent rounded-full animate-spin inline-block absolute bottom-2 left-8"
+        ></div>
+
+        <div
+          *ngIf="tick"
+          class="w-3 h-3 inline-block absolute bottom-5 left-8 text-green-500 text-2xl"
+        >
+          ✓
+        </div>
+      </div>
+
+      <!-- Share Icon -->
+      <div class="relative inline-block group">
+        <a>
+          <img
+            (click)="sharelink()"
+            class="w-7"
+            src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039326/share_axnfta.svg"
+            alt="Share Icon"
+          />
+        </a>
+        <div
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        >
+          Share
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
+          ></div>
+        </div>
+        <div *ngIf="showlinks == true" class="absolute">
+          <h1 class="text-[13px]">{{ link }}</h1>
+          <h1 *ngIf="clickingfornewlink == false" class="text-red-500">
+            Existing Link will Not Work
+          </h1>
+          <button
+            class="inline-block text-green-500 cursor-pointer"
+            (click)="copylink()"
           >
-            {{ num }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      *ngIf="previewdata[7] != ''"
-      class="font-bold relative right-72 text-[18px] mt-13 font-serif"
-      [style.color]="achievements1"
-    >
-      Achievements
-    </h1>
-    <textarea
-      readonly
-      *ngIf="previewdata[7] != ''"
-      [(ngModel)]="previewdata[7]"
-      class="w-180 border relative left-3 resize-none overflow-hidden"
-      (click)="workexp(2)"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="202"
-    ></textarea>
-
-    <h1
-      *ngIf="previewdata[8].length > 0"
-      class="font-bold mt-13 relative right-34 font-serif"
-      [style.color]="links1"
-    >
-      Links (Github, Stack Overflow, Patents, Publications)
-    </h1>
-    <table class="border relative left-25" (click)="workexp(3)">
-      <tbody>
-        <tr class="border" *ngFor="let links of previewdata[8]; let i = index">
-          <td class="border">
-            <input
-              [(ngModel)]="previewdata[8][i]['linkname']"
-              class="font-bold placeholder-gray-400"
-              type="text"
-              [placeholder]="static[i]?.[0] || 'Link Name'"
-              readonly
-            />
-          </td>
-          <td>
-            <input
-              [(ngModel)]="previewdata[8][i]['link']"
-              class="w-128.5 outline-none placeholder-gray-400"
-              type="text"
-              [placeholder]="static[i]?.[1] || 'Paste link here'"
-              readonly
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      *ngIf="previewdata[9].length > 0"
-      class="font-bold mt-13 relative right-59 font-serif"
-      [style.color]="eac"
-    >
-      Education and Certifications
-    </h1>
-    <table class="relative left-25" (click)="workexp(4)">
-      <tbody>
-        <tr class="border" *ngFor="let items of previewdata[9]; let i = index">
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[9][i]['graduationyear']"
-              class="text-center outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Graduation Year"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[9][i]['school']"
-              class="text-center w-82 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="School/College/University"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[9][i]['Degree']"
-              class="text-center w-25 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Degree"
-            />
-          </td>
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[9][i]['Grade']"
-              class="text-center w-28 outline-none placeholder-gray-400 text-black"
-              type="text"
-              placeholder="Grade"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      *ngIf="previewdata[10].length > 0"
-      class="font-bold mt-13 relative right-70 font-serif"
-      [style.color]="lf"
-    >
-      Language Fluency
-    </h1>
-    <table class="border relative left-25" (click)="workexp(5)">
-      <tbody>
-        <tr *ngFor="let item of previewdata[10]; let i = index">
-          <td class="border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[10][i]['language']"
-              class="font-bold placeholder-gray-400 text-black"
-              type="text"
-              [placeholder]="staticlanguage[i] || 'EX:Hindi'"
-              readonly
-            />
-          </td>
-          <td class="pr-13.5 pl-13.5 border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[10][i]['speak']"
-              type="checkbox"
-              disabled
-            /><label> Speak</label>
-          </td>
-          <td class="pr-15.5 pl-15.5 border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[10][i]['read']"
-              type="checkbox"
-              disabled
-            /><label> Read</label>
-          </td>
-          <td class="pr-14 pl-14 border text-gray-400">
-            <input
-              [(ngModel)]="previewdata[10][i]['write']"
-              type="checkbox"
-              disabled
-            /><label> Write</label>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1
-      *ngIf="previewdata[11] != ''"
-      class="font-bold relative right-68 text-[18px] mt-13 font-serif overflow-hidden"
-      [style.color]="ih"
-    >
-      Interests/Hobbies
-    </h1>
-    <textarea
-      readonly
-      *ngIf="previewdata[11] != ''"
-      [(ngModel)]="previewdata[11]"
-      class="outline-none w-181.5  border relative left-2 mb-17 overflow-hidden resize-none"
-      (click)="workexp(6)"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="2"
-      cdkAutosizeMaxRows="202"
-    ></textarea>
+            Copy
+          </button>
+          <h1 class="inline-block mx-1 text-green-500">/</h1>
+          <button
+            *ngIf="clickingfornewlink"
+            (click)="clickingfornewlink = false"
+            class="inline-block cursor-pointer text-green-500"
+          >
+            New Link
+          </button>
+          <button
+            (click)="changelink()"
+            *ngIf="clickingfornewlink == false"
+            class="inline-block cursor-pointer text-green-500"
+          >
+            Ok, Get New Link
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="fixed flex flex-col space-y-2 right-71 bottom-130">
-    <div class="relative inline-block group">
-      <button (click)="previewdatasend()">
-        <img
-          class="w-7"
-          src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1746734093/pencil-svgrepo-com_wqrpcm.svg"
-          alt="Edit Icon"
+  <div
+    *ngIf="previewopen == false"
+    class="h-[100%] w-[100%] pt-27 border border-solid border-gray-400"
+  >
+    <div
+      class="min-h-[1920px] w-[60%] border border-solid border-gray-400 text-center mx-73 mb-30 bg-white"
+    >
+      <input
+        *ngIf="previewdata[0]"
+        class="text-2xl font-bold text-center mt-14 outline-none border-b border-b-gray-400 pl-40.5 pr-40.5 placeholder-gray-400"
+        type="text"
+        placeholder="Full Name"
+        [(ngModel)]="previewdata[0]"
+        readonly
+      />
+
+      <div class="mb-5">
+        <input
+          readonly
+          [ngStyle]="{ visibility: previewdata[1] ? 'visible' : 'hidden' }"
+          class="relative right-11 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder="Email"
+          [(ngModel)]="previewdata[1]"
         />
-      </button>
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
-        Edit
-        <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
-        ></div>
+        <input
+          readonly
+          [ngStyle]="{ visibility: previewdata[2] ? 'visible' : 'hidden' }"
+          class="relative left-12 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder="Mobile"
+          [(ngModel)]="previewdata[2]"
+        />
+        <input
+          readonly
+          [ngStyle]="{ visibility: previewdata[3] ? 'visible' : 'hidden' }"
+          class="relative left-26 border-none outline-none placeholder-gray-400"
+          type="text"
+          placeholder=" Present Location"
+          [(ngModel)]="previewdata[3]"
+        />
       </div>
+
+      <textarea
+        readonly
+        [ngStyle]="{ display: previewdata[4] ? 'block' : 'none' }"
+        [(ngModel)]="aboutyourself"
+        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
+        placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="202"
+      ></textarea>
+
+      <h1
+        *ngIf="previewdata[5].length > 0"
+        class="font-bold relative right-51 text-[18px] font-serif"
+        [style.color]="work"
+      >
+        Work & Professional Experience
+      </h1>
+
+      <div
+        *ngFor="let table of previewdata[5]; let i = index"
+        (click)="workexp(1)"
+      >
+        <table class="border ml-[11%] cursor-pointer mt-5">
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  readonly
+                  [(ngModel)]="previewdata[5][i].from"
+                  class="bg-gray-200 w-20 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                />
+              </td>
+              <td>
+                <input
+                  readonly
+                  [(ngModel)]="previewdata[5][i].to"
+                  class="w-20 bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                />
+              </td>
+              <td>
+                <input
+                  readonly
+                  [(ngModel)]="previewdata[5][i].company"
+                  class="bg-gray-200 w-90 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                />
+              </td>
+              <td>
+                <input
+                  readonly
+                  [(ngModel)]="previewdata[5][i].location"
+                  class="bg-gray-200 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <input
+                  readonly
+                  [(ngModel)]="previewdata[5][i].designation"
+                  class="w-full bg-gray-200 h-10 text-center border border-gray-400 outline-none font-bold font-serif placeholder-gray-400 text-black"
+                  type="text"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <textarea
+                  readonly
+                  [(ngModel)]="dataArray[i].something"
+                  class="outline-none w-full"
+                  (ngModelChange)="updateit()"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="202"
+                ></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h1
+        *ngIf="previewdata[6].length > 0"
+        class="font-bold relative right-77 text-[18px] mt-13 font-serif top-10"
+        [style.color]="ks"
+      >
+        Key Skills
+      </h1>
+
+      <table
+        class="border-collapse w-full max-w-md ml-[11%]"
+        (click)="workexp(7)"
+      >
+        <thead>
+          <tr *ngIf="previewdata[6].length > 0">
+            <th class="p-3"></th>
+            <th class="text-center p-3 text-gray-400" colspan="3">Beginner</th>
+            <th class="text-center p-3 text-gray-400" colspan="3">Advanced</th>
+            <th class="text-center p-2 text-gray-400" colspan="2">Expert</th>
+            <th class="text-center p-2 text-gray-400" colspan="2">Guru</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let skill of previewdata[6]; let rowIndex = index">
+            <td class="border w-full h-full">
+              <input
+                [(ngModel)]="previewdata[6][rowIndex]['skillname']"
+                class="outline-none font-serif bg-gray-200 p-2.5 placeholder-gray-400"
+                type="text"
+                [placeholder]="staticvalueks[rowIndex] || 'Skill Name'"
+                readonly
+              />
+            </td>
+            <td
+              *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index"
+              class="px-[21.7px] text-center transition-colors duration-300 border-t border-b"
+              [ngClass]="{
+                'bg-gray-300':
+                  previewdata[6][rowIndex] &&
+                  num <= previewdata[6][rowIndex]['range'],
+                'border-r': num === 3 || num === 6 || num === 8 || num === 10
+              }"
+            >
+              {{ num }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        *ngIf="previewdata[7] != ''"
+        class="font-bold relative right-72 text-[18px] mt-13 font-serif"
+        [style.color]="achievements1"
+      >
+        Achievements
+      </h1>
+      <textarea
+        readonly
+        *ngIf="previewdata[7] != ''"
+        [(ngModel)]="previewdata[7]"
+        class="w-180 border relative left-3 resize-none overflow-hidden"
+        (click)="workexp(2)"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="202"
+      ></textarea>
+
+      <h1
+        *ngIf="previewdata[8].length > 0"
+        class="font-bold mt-13 relative right-34 font-serif"
+        [style.color]="links1"
+      >
+        Links (Github, Stack Overflow, Patents, Publications)
+      </h1>
+      <table class="border relative left-25" (click)="workexp(3)">
+        <tbody>
+          <tr
+            class="border"
+            *ngFor="let links of previewdata[8]; let i = index"
+          >
+            <td class="border">
+              <input
+                [(ngModel)]="previewdata[8][i]['linkname']"
+                class="font-bold placeholder-gray-400"
+                type="text"
+                [placeholder]="static[i]?.[0] || 'Link Name'"
+                readonly
+              />
+            </td>
+            <td>
+              <input
+                [(ngModel)]="previewdata[8][i]['link']"
+                class="w-128.5 outline-none placeholder-gray-400"
+                type="text"
+                [placeholder]="static[i]?.[1] || 'Paste link here'"
+                readonly
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        *ngIf="previewdata[9].length > 0"
+        class="font-bold mt-13 relative right-59 font-serif"
+        [style.color]="eac"
+      >
+        Education and Certifications
+      </h1>
+      <table class="relative left-25" (click)="workexp(4)">
+        <tbody>
+          <tr
+            class="border"
+            *ngFor="let items of previewdata[9]; let i = index"
+          >
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[9][i]['graduationyear']"
+                class="text-center outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Graduation Year"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[9][i]['school']"
+                class="text-center w-82 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="School/College/University"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[9][i]['Degree']"
+                class="text-center w-25 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Degree"
+              />
+            </td>
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[9][i]['Grade']"
+                class="text-center w-28 outline-none placeholder-gray-400 text-black"
+                type="text"
+                placeholder="Grade"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        *ngIf="previewdata[10].length > 0"
+        class="font-bold mt-13 relative right-70 font-serif"
+        [style.color]="lf"
+      >
+        Language Fluency
+      </h1>
+      <table class="border relative left-25" (click)="workexp(5)">
+        <tbody>
+          <tr *ngFor="let item of previewdata[10]; let i = index">
+            <td class="border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[10][i]['language']"
+                class="font-bold placeholder-gray-400 text-black"
+                type="text"
+                [placeholder]="staticlanguage[i] || 'EX:Hindi'"
+                readonly
+              />
+            </td>
+            <td class="pr-13.5 pl-13.5 border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[10][i]['speak']"
+                type="checkbox"
+                disabled
+              /><label> Speak</label>
+            </td>
+            <td class="pr-15.5 pl-15.5 border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[10][i]['read']"
+                type="checkbox"
+                disabled
+              /><label> Read</label>
+            </td>
+            <td class="pr-14 pl-14 border text-gray-400">
+              <input
+                [(ngModel)]="previewdata[10][i]['write']"
+                type="checkbox"
+                disabled
+              /><label> Write</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1
+        *ngIf="previewdata[11] != ''"
+        class="font-bold relative right-68 text-[18px] mt-13 font-serif overflow-hidden"
+        [style.color]="ih"
+      >
+        Interests/Hobbies
+      </h1>
+      <textarea
+        readonly
+        *ngIf="previewdata[11] != ''"
+        [(ngModel)]="previewdata[11]"
+        class="outline-none w-181.5 border relative left-2 mb-17 overflow-hidden resize-none"
+        (click)="workexp(6)"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="202"
+      ></textarea>
     </div>
-    <div class="relative inline-block group">
-      <a>
-        <img
-          (click)="maybe()"
-          class="w-7"
-          alt="Save Icon"
-          [src]="
-            issame
-              ? 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039169/save_ybayay.svg'
-              : 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1747405629/save_18202893_cuurhr.png'
-          "
-        />
-      </a>
 
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-block"
-      >
-        Save
+    <div class="fixed flex flex-col space-y-2 right-71 bottom-130">
+      <div class="relative inline-block group">
+        <button (click)="previewdatasend()">
+          <img
+            class="w-7"
+            src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1746734093/pencil-svgrepo-com_wqrpcm.svg"
+            alt="Edit Icon"
+          />
+        </button>
+        <div
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        >
+          Edit
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
+          ></div>
+        </div>
+      </div>
+      <div class="relative inline-block group">
+        <a>
+          <img
+            (click)="maybe()"
+            class="w-7"
+            alt="Save Icon"
+            [src]="
+              issame
+                ? 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039169/save_ybayay.svg'
+                : 'https://res.cloudinary.com/ds1ysygvb/image/upload/v1747405629/save_18202893_cuurhr.png'
+            "
+          />
+        </a>
 
         <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600 inline-block"
-        ></div>
-      </div>
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 inline-block"
+        >
+          Save
 
-      <div
-        *ngIf="saveload"
-        class="w-3 h-3 border-4 border-gray-500 border-t-transparent rounded-full animate-spin inline-block absolute bottom-2 left-8"
-      ></div>
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600 inline-block"
+          ></div>
+        </div>
 
-      <div
-        *ngIf="tick"
-        class="w-3 h-3 inline-block absolute bottom-5 left-8 text-green-500 text-2xl"
-      >
-        ✓
-      </div>
-    </div>
-
-    <!-- Share Icon -->
-    <div class="relative inline-block group">
-      <a>
-        <img
-          (click)="sharelink()"
-          class="w-7"
-          src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039326/share_axnfta.svg"
-          alt="Share Icon"
-        />
-      </a>
-      <div
-        class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
-        Share
         <div
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
+          *ngIf="saveload"
+          class="w-3 h-3 border-4 border-gray-500 border-t-transparent rounded-full animate-spin inline-block absolute bottom-2 left-8"
         ></div>
+
+        <div
+          *ngIf="tick"
+          class="w-3 h-3 inline-block absolute bottom-5 left-8 text-green-500 text-2xl"
+        >
+          ✓
+        </div>
       </div>
-      <div *ngIf="showlinks == true" class="absolute">
-        <h1 class="text-[13px]">{{ link }}</h1>
-        <h1 *ngIf="clickingfornewlink == false" class="text-red-500">
-          Existing Link will Not Work
-        </h1>
-        <button class="inline-block text-green-500 cursor-pointer">Copy</button>
-        <h1 class="inline-block mx-1 text-green-500">/</h1>
-        <button
-          *ngIf="clickingfornewlink"
-          (click)="clickingfornewlink = false"
-          class="inline-block cursor-pointer text-green-500"
+
+      <!-- Share Icon -->
+      <div class="relative inline-block group">
+        <a>
+          <img
+            (click)="sharelink()"
+            class="w-7"
+            src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745039326/share_axnfta.svg"
+            alt="Share Icon"
+          />
+        </a>
+        <div
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-gray-600 px-3 py-1 rounded text-amber-50 text-sm z-10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200"
         >
-          New Link
-        </button>
-        <button
-          (click)="changelink()"
-          *ngIf="clickingfornewlink == false"
-          class="inline-block cursor-pointer text-green-500"
-        >
-          Ok, Get New Link
-        </button>
+          Share
+          <div
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full w-0 h-0 border-t-4 border-b-4 border-r-4 border-t-transparent border-b-transparent border-r-gray-600"
+          ></div>
+        </div>
+        <div *ngIf="showlinks == true" class="absolute">
+          <h1 class="text-[13px]">{{ link }}</h1>
+          <h1 *ngIf="clickingfornewlink == false" class="text-red-500">
+            Existing Link will Not Work
+          </h1>
+          <button class="inline-block text-green-500 cursor-pointer">
+            Copy
+          </button>
+          <h1 class="inline-block mx-1 text-green-500">/</h1>
+          <button
+            *ngIf="clickingfornewlink"
+            (click)="clickingfornewlink = false"
+            class="inline-block cursor-pointer text-green-500"
+          >
+            New Link
+          </button>
+          <button
+            (click)="changelink()"
+            *ngIf="clickingfornewlink == false"
+            class="inline-block cursor-pointer text-green-500"
+          >
+            Ok, Get New Link
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
