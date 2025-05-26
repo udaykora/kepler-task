@@ -34,7 +34,6 @@ import {
   styleUrl: './resume.component.css',
 })
 export class ResumeComponent implements OnInit, DoCheck {
-  
   resumeData1: any = {};
   issame: any = true;
   saveload: any = false;
@@ -45,6 +44,7 @@ export class ResumeComponent implements OnInit, DoCheck {
   buttons: any = true;
   loginstatus: any = true;
   id: any = undefined;
+  rightbuttons: any = true;
 
   ngDoCheck(): void {
     const senddata = {
@@ -67,7 +67,32 @@ export class ResumeComponent implements OnInit, DoCheck {
     }
   }
 
-  async ngOnInit(){
+  async ngOnInit() {
+    // this.buttons = false;
+    // this.id = this.route.snapshot.paramMap.get('id');
+    // if (this.id) {
+    //   console.log(this.buttons);
+    //   this.sidebarService.email$.subscribe((data) => {
+    //     if (data == null) this.buttons = false;
+    //   });
+    //   if (this.buttons == false) {
+    //     await this.sidebarService.getdatabyid(this.id).then(() => {
+    //       this.previewdatasend();
+    //     });
+    //   }
+    // }
+    // this.sidebarService.resumedata$.subscribe((data) => {
+    //   if (data && data.resumedetails) {
+    //     this.setResumeData(data.resumedetails);
+    //     console.log(data.resumedetails);
+    //   }
+    // });
+    // this.sidebarService.email$.subscribe((data) => {
+    //   if (data == null) this.loginstatus = false;
+    // });
+  }
+
+  ngAfterViewInit(): void {
     this.buttons = false;
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -75,16 +100,15 @@ export class ResumeComponent implements OnInit, DoCheck {
       console.log(this.buttons);
       this.sidebarService.email$.subscribe((data) => {
         if (data == null) this.buttons = false;
+        else {
+          this.rightbuttons = true;
+          this.loginstatus = true;
+        }
       });
-      if (this.buttons == false) {
-       await this.sidebarService.getdatabyid(this.id).then(() => {
-          this.previewdatasend();
-         
-        });
-      }
     }
     this.sidebarService.resumedata$.subscribe((data) => {
       if (data && data.resumedetails) {
+        this.previewopen = true;
         this.setResumeData(data.resumedetails);
         console.log(data.resumedetails);
       }
@@ -95,22 +119,33 @@ export class ResumeComponent implements OnInit, DoCheck {
     });
   }
 
-  // ngAfterViewInit(): void {
-  //   if (this.buttons == false) {
-  //     // this.sidebarService.getdatabyid(this.id).then(() => {
-  //     //   console.log('only god knows');
-  //     // });
-  //   }
-  // }
+  hello() {
+    if (this.buttons == false && this.id) {
+      this.sidebarService.getdatabyid(this.id).then(() => {
+        this.previewdatasend();
+        this.rightbuttons = false;
+        this.previewopen = false;
+      });
+    } else {
+      console.log('might be');
+      this.rightbuttons = true;
+      this.previewopen = true;
+    }
+  }
 
   constructor(
     private sidebarService: SidebarService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    window.onload = () => {
+      this.hello();
+    };
+  }
 
   setResumeData(data: any) {
     const objlength = Object.keys(data).length;
+    this.previewopen = true;
     if (objlength <= 0) {
       console.log(objlength);
       console.log(data.resumedetails);
@@ -241,7 +276,7 @@ export class ResumeComponent implements OnInit, DoCheck {
     console.log(this.link);
   }
 
-  previewopen: boolean = true;
+  previewopen: any = null;
   useremail: any = '';
   count = 0;
   fullname: any = '';
