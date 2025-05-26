@@ -1,0 +1,33 @@
+@keyframes searchtippageanim {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  
+  @keyframes searchtippagegone {
+
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-70px);
+    }
+
+    
+  }
+
+  .searchtip-animation {
+    animation: searchtippageanim 0.5s ease-out forwards;
+  }
+
+  .searchtip-anim{
+    animation:searchtippagegone 0.2s ease-out forwards 
+  }
+  

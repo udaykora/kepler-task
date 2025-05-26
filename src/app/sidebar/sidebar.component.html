@@ -1,0 +1,112 @@
+<div class="fixed bottom-125">
+  <img
+    class="w-20 relative top-8"
+    src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745036416/logo_diepcx.png"
+    alt="Logo"
+  />
+
+  <!-- Navigation Link to 'My CV' -->
+  <a
+    class="relative top-14 left-3 font-bold font-serif text-gray-500 hover:text-black"
+    [routerLink]="useridvalid ? ['/mycv', userid] : ['/mycv']"
+    routerLinkActive="text-gray-900"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    <h1>My CV</h1>
+  </a>
+  <a
+    class="relative top-14 left-3 font-bold font-serif text-gray-500 hover:text-black transition duration-200"
+    routerLink="/viewjob"
+    routerLinkActive="text-gray-900"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <h1>View Jobs</h1>
+  </a>
+
+  <a
+    (click)="openpostjob()"
+    class="relative top-14 left-3 font-bold font-serif text-gray-500 hover:text-black"
+    [routerLink]="postjobstatus ? '/postjob' : ''"
+    routerLinkActive="text-gray-900"
+    [routerLinkActiveOptions]="{ exact: true }"
+    ><h1>Post a Job</h1></a
+  >
+  <button
+    *ngIf="email == undefined"
+    (click)="openlogin()"
+    class="relative top-22 left-3 font-bold font-serif text-gray-500 hover:text-black"
+  >
+    <h1>{{ "Login" }}</h1>
+  </button>
+
+  <a
+    *ngIf="email != undefined"
+    (click)="removeemailfun()"
+    class="relative top-22 left-3 font-bold font-serif text-gray-500 hover:text-black"
+    href=""
+  >
+    <h1>{{ "Logout" }}</h1>
+  </a>
+
+  <h1
+    class="relative top-22 left-3 font-bold font-serif text-gray-500 hover:text-black"
+  >
+    {{ email }}
+  </h1>
+
+  <h1 class="relative top-22 left-3 font-bold font-serif text-gray-500">
+    {{ userdata }}
+  </h1>
+</div>
+<div class="fixed top-174 left-4">
+  <!-- Book Icon -->
+  <div class="group relative mb-4 w-7 inline-block">
+    <img
+      src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745040259/book-svgrepo-com_kmkokx.svg"
+      alt="Book"
+      class="w-full"
+    />
+    <div
+      class="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+    >
+      Terms
+      <div
+        class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-700"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Twitter Icon -->
+  <div class="group relative mb-4 w-7 inline-block">
+    <img
+      src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745040600/icons8-twitter-bird_vbcllv.svg"
+      alt="Twitter"
+      class="w-full"
+    />
+    <div
+      class="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+    >
+      Twitter
+      <div
+        class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-700"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Message Icon -->
+  <div class="group relative mb-4 w-7 inline-block">
+    <img
+      src="https://res.cloudinary.com/ds1ysygvb/image/upload/v1745049336/message_yy8kir.svg"
+      alt="Message"
+      class="w-full"
+    />
+    <div
+      class="absolute z-10 bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+    >
+      Feedback
+      <div
+        class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-700"
+      ></div>
+    </div>
+  </div>
+</div>

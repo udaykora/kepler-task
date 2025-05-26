@@ -1,3 +1,40 @@
 import { Routes } from '@angular/router';
+import { ViewjobComponent } from './viewjob/viewjob.component';
+import { ResumeComponent } from './resume/resume.component';
+import { PostajobComponent } from './postajob/postajob.component';
+import { DummyComponent } from './dummy/dummy.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'mycv',
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'mycv',
+    children: [
+      {
+        path: '',
+        component: ResumeComponent,
+      },
+      {
+        path: ':id',
+        component: ResumeComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'viewjob',
+    component: ViewjobComponent,
+  },
+  {
+    path: 'postjob',
+    component: PostajobComponent,
+  },
+  {
+    path: 'dummy',
+    component: DummyComponent,
+  },
+];

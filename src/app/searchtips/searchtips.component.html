@@ -1,0 +1,46 @@
+<table
+  class="border w-3xl ml-90.5 mt-12 absolute inset-0 z-50"
+  [ngClass]="animation ? 'searchtip-animation' : 'searchtip-anim'"
+>
+  <thead>
+    <tr class="relative">
+      <td class="py-7 px-7 text-center bg-white">
+        <h1 class="inline-block text-2xl font-serif font-bold z-50">
+          SEARCH TIPS
+        </h1>
+        <button
+          class="inline-block absolute right-2 font-bold cursor-pointer"
+          (click)="closethetip()"
+        >
+          &#10005;
+        </button>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="bg-gray-200 font-serif border">
+        <div class="ml-8 mt-5">
+          <p class="mb-4.5">1. Type Your Location</p>
+          <p class="mb-4.5">
+            2. Type Your Search Parameters - Separated by commas. You can use
+            operators like '=', '&lt;', and '&gt;'
+            <br />Examples: <br />- Javascript=5 <br />- React&gt;4, Python&gt;7
+          </p>
+
+          <p class="mb-4.5">3. Enter</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center bg-white">
+        <button
+          class="border px-5 py-2 bg-gray-700 text-amber-50 font-black mt-3 mb-3 hover:bg-black cursor-pointer"
+          (click)="closethetip()"
+        >
+          Close
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

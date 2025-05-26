@@ -1,0 +1,30 @@
+<table class="border-collapse w-full max-w-md">
+  <tbody>
+    <tr *ngFor="let skill of keySkills; let rowIndex = index">
+      <!-- Input column -->
+      <td class="border w-full h-full">
+        <input
+          #keysk
+          class="outline-none font-serif bg-gray-200 p-4 placeholder-gray-400"
+          type="text"
+          [placeholder]="staticvalueks[rowIndex] || 'Skill Name'"
+        />
+      </td> 
+  
+      <!-- Number buttons -->
+      <td
+        *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index"
+        class="p-3 text-center transition-colors duration-300 border-t border-b"
+        [ngClass]="{
+          'bg-gray-300':
+            selectedNumbers[rowIndex] && num <= selectedNumbers[rowIndex][0],
+
+          'border-r': num === 3 || num === 6 || num === 8 || num === 10
+        }"
+        (click)="selectNumber(rowIndex, num, keysk.value)"
+      >
+        {{ num }}
+      </td>
+    </tr>
+  </tbody>
+</table>
