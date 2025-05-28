@@ -58,7 +58,6 @@ export class LoginsignComponent {
         this.enterpassword
       );
 
-      console.log(isValidUser);
       if (this.entermail === '' || this.enterpassword === '') {
         this.message = 'Email/Password cannot be empty';
         this.loadinganim = false;

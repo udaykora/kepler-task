@@ -1,3 +1,4 @@
+
 <div>
   <div
     *ngIf="previewopen"
@@ -40,7 +41,7 @@
         cdkAutosizeMinRows="2"
         cdkAutosizeMaxRows="202"
         [(ngModel)]="aboutyourself"
-        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
+        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400 overflow-hidden"
         placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
       ></textarea>
 
@@ -434,7 +435,7 @@
 
   <div
     *ngIf="previewopen == false"
-    class="h-[100%] w-[100%] pt-27 border border-solid border-gray-400"
+    class="h-[100%] w-[100%] pt-27 border border-solid border-gray- bg-gray-200"
   >
     <div
       class="min-h-[1920px] w-[60%] border border-solid border-gray-400 text-center mx-73 mb-30 bg-white"
@@ -479,10 +480,10 @@
         readonly
         [ngStyle]="{ display: previewdata[4] ? 'block' : 'none' }"
         [(ngModel)]="aboutyourself"
-        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400"
+        class="pl-[30.5px] pr-[30.5px] w-[690px] text-center outline-none mt-9 italic placeholder-gray-400 overflow-hidden relative left-24"
         placeholder="Describe yourself in one sentence(Example iOS developer with 2 years experience)"
         cdkTextareaAutosize
-        cdkAutosizeMinRows="5"
+        cdkAutosizeMinRows="2"
         cdkAutosizeMaxRows="202"
       ></textarea>
 

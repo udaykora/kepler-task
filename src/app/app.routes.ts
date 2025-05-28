@@ -18,6 +18,11 @@ export const routes: Routes = [
         path: '',
         component: ResumeComponent,
       },
+
+      {
+        path: 'dummy',
+        component: DummyComponent,
+      },
       {
         path: ':id',
         component: ResumeComponent,
@@ -32,9 +37,5 @@ export const routes: Routes = [
   {
     path: 'postjob',
     component: PostajobComponent,
-  },
-  {
-    path: 'dummy',
-    component: DummyComponent,
   },
 ];

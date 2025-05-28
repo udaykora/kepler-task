@@ -18,16 +18,13 @@ import { RouterModule } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
   email: any = undefined;
   useridvalid: any = false;
   userid: any = null;
 
-
-
   ngOnInit(): void {
     this.sidebarService.email$.subscribe((data) => {
-      console.log(data);
       if (data) {
         this.email = data;
         this.sidebarService.sendData(false);
@@ -38,8 +35,6 @@ export class SidebarComponent implements OnInit{
       this.userid = data;
     });
   }
-
-
 
   constructor(private sidebarService: SidebarService, private router: Router) {}
 
@@ -56,7 +51,6 @@ export class SidebarComponent implements OnInit{
 
   openpostjob() {
     this.sidebarService.email$.subscribe((data) => {
-      console.log(data);
       if (data != undefined) {
         this.postjobstatus = true;
         this.router.navigate(['/postjob']);
@@ -79,10 +73,7 @@ export class SidebarComponent implements OnInit{
 
   @Input() userdata: any;
 
-  
-
   ngOnChanges() {
-    console.log('Received from parent:', this.userdata);
     this.islogged = true;
   }
 }

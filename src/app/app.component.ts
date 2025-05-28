@@ -40,17 +40,17 @@ export class AppComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.sidebarService.sidebarData$.subscribe((data) => {
-      console.log(data);
+     
       if (data == true || data == false) {
         this.check = data;
-        console.log('Received from sidebar:', data);
+       
         this.loginopen = data;
       }
     });
   }
 
   handledata(data: any) {
-    console.log('fggdf');
+   
     this.loginopen = data == true ? true : false;
   }
 }

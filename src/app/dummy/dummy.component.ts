@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Directive, HostListener, Input } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { Route, Router, ActivatedRoute } from '@angular/router';
+import { Route, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { SidebarService } from '../loginservice/loginservice';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-dummy',
   standalone: true,
-  imports: [FormsModule, CommonModule, TextFieldModule],
+  imports: [FormsModule, CommonModule, TextFieldModule,RouterOutlet],
   templateUrl: './dummy.component.html',
   styleUrls: ['./dummy.component.css'],
 })

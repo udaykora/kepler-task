@@ -72,59 +72,79 @@ export class SidebarService {
   }
 
   async loginWithEmailAndPassword(
-    email?: string,
-    password?: string,
+    email: string,
+    password: string,
     id?: string
-  ): Promise<boolean> {
+  ): Promise<any> {
     const usersRef = collection(this.firestore, 'resumedata');
 
-    if (id) {
-      const docRef = doc(this.firestore, 'resumedata', id);
-      const docSnap = await getDoc(docRef);
+    const userid = doc(this.firestore, "userid's", email);
 
-      if (docSnap.exists()) {
-        this.userid = docSnap.id;
-        const data = docSnap.data();
+    const datafile = await getDoc(userid);
+
+    if (datafile.exists()) {
+      let id = datafile.data()['id'];
+      let userdatafile = doc(this.firestore, 'resumedata', id);
+      let userdata = await getDoc(userdatafile);
+
+      if (userdata.exists() && userdata.data()['Password'] == password) {
+        this.userid = userdata.id;
+        const data = userdata.data();
         this.resumedata.next(data);
         this.id.next(this.userid);
-        this.router.navigate(['/postjob']);
-        return true;
-      } else {
-        console.warn(`No document found with ID: ${id}`);
-        return false;
-      }
-    } else {
-      const conditions = [];
-
-      if (email !== undefined) {
-        conditions.push(where('Email', '==', email));
-      }
-      if (password !== undefined) {
-        conditions.push(where('Password', '==', password));
-      }
-
-      if (conditions.length === 0) {
-        console.warn('No valid parameters provided for login.');
-        return false;
-      }
-
-      const q = query(usersRef, ...conditions);
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const docSnap = querySnapshot.docs[0];
-        this.userid = docSnap.id;
-        const data = docSnap.data();
-        console.log(data);
-        this.resumedata.next(data);
-        this.id.next(this.userid);
-
         return true;
       } else {
         console.warn('No matching documents found.');
         return false;
       }
     }
+
+    // if (id) {
+    //   const docRef = doc(this.firestore, 'resumedata', id);
+    //   const docSnap = await getDoc(docRef);
+
+    //   if (docSnap.exists()) {
+    //     this.userid = docSnap.id;
+    //     const data = docSnap.data();
+    //     this.resumedata.next(data);
+    //     this.id.next(this.userid);
+    //     return true;
+    //   } else {
+    //     console.warn(`No document found with ID: ${id}`);
+    //     return false;
+    //   }
+    // } else {
+    //   const conditions = [];
+
+    //   if (email !== undefined) {
+    //     conditions.push(where('Email', '==', email));
+    //   }
+    //   if (password !== undefined) {
+    //     conditions.push(where('Password', '==', password));
+    //   }
+
+    //   if (conditions.length === 0) {
+    //     console.warn('No valid parameters provided for login.');
+    //     return false;
+    //   }
+
+    //   const q = query(usersRef, ...conditions);
+    //   const querySnapshot = await getDocs(q);
+
+    //   if (!querySnapshot.empty) {
+    //     const docSnap = querySnapshot.docs[0];
+    //     this.userid = docSnap.id;
+    //     const data = docSnap.data();
+    //     console.log(data);
+    //     this.resumedata.next(data);
+    //     this.id.next(this.userid);
+
+    //     return true;
+    //   } else {
+    //     console.warn('No matching documents found.');
+    //     return false;
+    //   }
+    // }
   }
 
   async getdatabyid(id: string): Promise<any> {
@@ -134,8 +154,8 @@ export class SidebarService {
     if (snapshot.exists()) {
       const data = snapshot.data();
       this.resumedata.next(data);
-      console.log(data);
-      return data
+
+      return data;
     } else {
       console.warn('No document found with ID:', id);
       return null;
@@ -148,11 +168,19 @@ export class SidebarService {
     }
 
     const docRef = doc(this.firestore, 'resumedata', this.userid);
-    console.log(updatedResumeDetails);
 
-    // Only update the resumedetails field
     await updateDoc(docRef, {
       resumedetails: updatedResumeDetails,
+    });
+  }
+
+  async changeuserid(email: any, id: any): Promise<void> {
+    console.log(email);
+    console.log(id);
+    const dockref = doc(this.firestore, "userid's", email);
+
+    await updateDoc(dockref, {
+      id: id,
     });
   }
 }
