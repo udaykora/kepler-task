@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarService } from '../loginservice/loginservice';
 import { Router } from '@angular/router';
+import {
+  getAuth,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  sendPasswordResetEmail,
+} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-loginsign',
@@ -87,7 +93,12 @@ export class LoginsignComponent {
       }
       const emailtest = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.emailvalid = emailtest.test(this.forgotEmail);
-      if (!this.emailvalid) this.message2 = 'Enter Valid Mail';
+      if (!this.emailvalid) {
+        this.message2 = 'Enter Valid Mail';
+        return;
+      } else {
+        this.resetpassword();
+      }
     } else {
       if (this.signemail == '') {
         this.message1 = 'Email Cannot be Empty';
@@ -96,12 +107,71 @@ export class LoginsignComponent {
       if (this.userType == 'regular') {
         const emailtest = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         this.emailvalid = emailtest.test(this.signemail);
-        if (!this.emailvalid) this.message1 = 'Enter Valid Mail';
+        if (!this.emailvalid) {
+          this.message1 = 'Enter Valid Mail';
+          return;
+        } else {
+          this.sidebarservice.newemailsearch(this.signemail).then((data) => {
+            if (data) this.newuser();
+            else this.message1 = 'User Already Exists';
+          });
+        }
       } else {
         this.message1 = 'Enter A valid Mail';
       }
     }
   }
+
+  newuser() {
+    const auth = getAuth();
+    const actionCodeSettings = {
+      url:
+        'http://localhost:4200/mycv/signin?email=' +
+        encodeURIComponent(this.signemail),
+
+      handleCodeInApp: true,
+    };
+
+    sendSignInLinkToEmail(auth, this.signemail, actionCodeSettings)
+      .then(() => {
+        this.message1 = 'Verification link sent to the mail';
+      })
+      .catch((err) => console.error('Error sending link:', err));
+  }
+
+  // resetpassword() {
+  //   const auth = getAuth();
+  //   const email = this.forgotEmail;
+
+  //   const actionCodeSettings = {
+  //     url: 'http://localhost:4200/viewjob',
+  //     handleCodeInApp: true,
+  //   };
+
+  //   // sendPasswordResetEmail(auth, email, actionCodeSettings)
+  //   //   .then(() => {
+  //   //     console.log('Password reset email sent!');
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error('Error sending password reset email:', error);
+  //   //   });
+
+  resetpassword() {
+    const auth = getAuth();
+    const email = this.forgotEmail;
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert('Reset email sent!');
+      })
+      .catch((error) => {
+        console.error('Error:', error.message);
+      });
+  }
+
+  // sendPasswordResetEmail(auth, email, {
+  //   url: 'http://localhost:4200/mycv', // 👈 custom Angular route
+  //   handleCodeInApp: true, // 👈 tells Firebase not to show its UI
+  // });
 
   changetologin() {
     this.login = true;

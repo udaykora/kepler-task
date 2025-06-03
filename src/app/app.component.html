@@ -1,13 +1,25 @@
 <!-- <app-resume></app-resume> -->
 <!-- <app-viewjob></app-viewjob> -->
-  
-  <div *ngIf="loginopen">
-    <div class="fixed inset-0 bg-black opacity-50 z-50  "></div>
 
-    <app-loginsign (removelogin)="handledata($event)"></app-loginsign>
-  </div>
-  <app-sidebar (loginOpenchanged)="handledata($event)"></app-sidebar>
-  <!-- <app-searchtips></app-searchtips> -->
-  <!-- <app-practice></app-practice> -->
-  <!-- <app-postajob></app-postajob> -->
+<div *ngIf="loginopen">
+  <div class="fixed inset-0 bg-black opacity-50 z-50"></div>
+
+  <app-loginsign (removelogin)="handledata($event)"></app-loginsign>
+</div>
+
+<div *ngIf="signinformopen">
+  <div class="fixed inset-0 bg-black opacity-50 z-50"></div>
+  <app-signin></app-signin>
+</div>
+
+<div *ngIf="resetformopen">
+  <div class="fixed inset-0 bg-black opacity-50 z-50"></div>
+  <app-resetpassword></app-resetpassword>
+</div>
+
+<app-sidebar (loginOpenchanged)="handledata($event)"></app-sidebar>
+
+<!-- <app-searchtips></app-searchtips> -->
+<!-- <app-practice></app-practice> -->
+<!-- <app-postajob></app-postajob> -->
 <router-outlet />

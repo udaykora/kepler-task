@@ -19,7 +19,7 @@ import { SidebarService } from '../loginservice/loginservice';
   templateUrl: './viewjob.component.html',
   styleUrls: ['./viewjob.component.css'],
 })
-export class ViewjobComponent  {
+export class ViewjobComponent implements OnInit {
   @ViewChild('location') containerRef!: ElementRef;
   @ViewChild('closeit') containerRefclose!: ElementRef;
 
@@ -36,11 +36,9 @@ export class ViewjobComponent  {
     private route: ActivatedRoute
   ) {}
 
-  // ngOnInit(): void {
-  //   let id: any = this.route.snapshot.paramMap.get('id');
-
-  //   this.sidebarService.getdatabyid(id);
-  // }
+  ngOnInit(): void {
+    console.log('hiiiiiiiiiiiii');
+  }
 
   selectedCity: string = '';
   selectedjob: string = '';

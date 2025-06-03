@@ -1,4 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { getAuth, createUserWithEmailAndPassword, User } from 'firebase/auth';
+
 import {
   collectionData,
   Firestore,
@@ -6,6 +8,7 @@ import {
   doc,
   addDoc,
   getDoc,
+  setDoc,
 } from '@angular/fire/firestore';
 import {
   collection,
@@ -28,12 +31,16 @@ export class SidebarService {
   private previewdatasend = new BehaviorSubject<any>(null);
   private resumedata = new BehaviorSubject<any>(null);
   private id = new BehaviorSubject<any>(null);
+  private signinemail = new BehaviorSubject<any>(null);
+  private resetpasswordmail = new BehaviorSubject<any>(null);
 
   sidebarData$ = this.sidebarData.asObservable();
   email$ = this.email.asObservable();
   previewdatasend$ = this.previewdatasend.asObservable();
   resumedata$ = this.resumedata.asObservable();
   id$ = this.id.asObservable();
+  signinemail$ = this.signinemail.asObservable();
+  resetpasswordmail$ = this.resetpasswordmail.asObservable();
 
   sendData(data: any) {
     this.sidebarData.next(data);
@@ -97,6 +104,9 @@ export class SidebarService {
         console.warn('No matching documents found.');
         return false;
       }
+    } else {
+      console.warn('No matching documents found.');
+      return false;
     }
 
     // if (id) {
@@ -182,5 +192,58 @@ export class SidebarService {
     await updateDoc(dockref, {
       id: id,
     });
+  }
+  async newemailsearch(email: any): Promise<any> {
+    const emailsearch = doc(this.firestore, "userid's", email);
+    const snapshot = await getDoc(emailsearch);
+
+    if (snapshot.exists()) {
+      return false;
+    } else return true;
+  }
+
+  async signinproc(email: any): Promise<any> {
+    this.signinemail.next(email);
+  }
+
+  async createacc(email: any, password: any): Promise<any> {
+    const auth = getAuth();
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const data = {
+      Password: password,
+      resumedetails: {},
+    };
+
+    const docRef = await addDoc(collection(this.firestore, 'resumedata'), data);
+    const id: any = docRef.id;
+
+    const docRef1 = doc(this.firestore, "userid's", email);
+    await setDoc(docRef1, { id: id }, { merge: true });
+    return id;
+  }
+
+  async resetpassword(email: any): Promise<any> {
+    this.resetpasswordmail.next(email);
+  }
+
+  async resetpasswordfun(email: string, newPassword: string): Promise<void> {
+    const docRef1 = doc(this.firestore, "userid's", email);
+    const snapshot = await getDoc(docRef1);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      const userId = data['id'];
+      const docRef2 = doc(this.firestore, 'resumedata', userId);
+      await updateDoc(docRef2, {
+        Password: newPassword,
+      });
+    } else {
+      console.error('User not found with that email.');
+    }
   }
 }

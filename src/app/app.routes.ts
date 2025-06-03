@@ -3,6 +3,7 @@ import { ViewjobComponent } from './viewjob/viewjob.component';
 import { ResumeComponent } from './resume/resume.component';
 import { PostajobComponent } from './postajob/postajob.component';
 import { DummyComponent } from './dummy/dummy.component';
+import { RpComponent } from './rp/rp.component';
 
 export const routes: Routes = [
   {
@@ -38,4 +39,5 @@ export const routes: Routes = [
     path: 'postjob',
     component: PostajobComponent,
   },
+  { path: 'rp', component: RpComponent },
 ];

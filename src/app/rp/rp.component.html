@@ -1,0 +1,10 @@
+<h2>Reset Your Password</h2>
+
+<div *ngIf="oobCode">
+  <input type="password" [(ngModel)]="newPassword" placeholder="New password" />
+  <button (click)="resetPassword()">Submit</button>
+</div>
+
+<div *ngIf="!oobCode">
+  <p>Invalid or missing code in URL.</p>
+</div>

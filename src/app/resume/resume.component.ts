@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { getAuth, verifyPasswordResetCode } from '@firebase/auth';
 
 import isEqual from 'lodash.isequal';
 import { isEmpty } from 'rxjs';
@@ -65,6 +66,7 @@ export class ResumeComponent implements AfterViewInit, DoCheck {
   education: string = 'grey';
   previewdata: any = [];
   mail: any = '';
+  oobcode: any = undefined;
 
   ks: string = 'grey';
   lf: any = 'grey';
@@ -77,6 +79,9 @@ export class ResumeComponent implements AfterViewInit, DoCheck {
   Find: any = false;
   staticvalueks = ['EX:JavaScript'];
   achievementsfield: any = '';
+  emailsignin: string | null = null;
+  apiKeysignin: string | null = null;
+  modesignin: string | null = null;
   selectedNumbers: any[] = [
     {
       range: 0,
@@ -185,7 +190,22 @@ export class ResumeComponent implements AfterViewInit, DoCheck {
     this.buttons = false;
     this.id = this.route.snapshot.paramMap.get('id');
 
-    if (this.id) {
+    this.route.queryParamMap.subscribe((params) => {
+      this.emailsignin = params.get('email');
+      this.apiKeysignin = params.get('apiKey');
+      this.modesignin = params.get('mode');
+
+      console.log('Email:', this.emailsignin);
+      console.log('API Key:', this.apiKeysignin);
+      console.log('Mode:', this.modesignin);
+    });
+
+    if (
+      this.id &&
+      !this.emailsignin &&
+      !this.apiKeysignin &&
+      !this.modesignin
+    ) {
       this.sidebarService.email$.subscribe((data) => {
         if (data == null) this.buttons = false;
         else {
@@ -210,16 +230,64 @@ export class ResumeComponent implements AfterViewInit, DoCheck {
   }
 
   hello() {
-    if (this.buttons == false && this.id) {
+    if (
+      this.buttons == false &&
+      this.id &&
+      !this.emailsignin &&
+      !this.apiKeysignin &&
+      !this.modesignin
+    ) {
       this.sidebarService.getdatabyid(this.id).then(() => {
         this.previewdatasend();
         this.rightbuttons = false;
         this.previewopen = false;
+        return;
       });
-    } else {
+    }
+
+    if (this.modesignin == 'signIn') {
       this.rightbuttons = true;
       this.previewopen = true;
       console.log(this.previewopen);
+      // Step 1: Get the outer URLSearchParams
+      const outerParams = new URLSearchParams(window.location.search);
+
+      // Step 2: Get and decode the `continueUrl`
+      const continueUrl = outerParams.get('continueUrl');
+      const decodedContinueUrl = decodeURIComponent(continueUrl || '');
+
+      // Step 3: Get the inner email parameter
+      const innerParams = new URLSearchParams(decodedContinueUrl.split('?')[1]);
+      const email = innerParams.get('email');
+
+      console.log('Extracted email:', email);
+      this.emailsignin = email;
+
+      if (this.emailsignin) {
+        this.sidebarService.signinproc(this.emailsignin);
+      }
+
+      //
+    }
+
+    if (this.modesignin == 'resetPassword') {
+      this.rightbuttons = true;
+      this.previewopen = true;
+      this.oobcode = this.route.snapshot.queryParamMap.get('oobCode');
+      console.log('Reset code:', this.oobcode);
+
+      const auth = getAuth();
+      if (this.oobcode) {
+        verifyPasswordResetCode(auth, this.oobcode)
+          .then((email) => {
+            if (email) {
+              this.sidebarService.resetpassword(email);
+            }
+          })
+          .catch((error) => {
+            console.error('Invalid or expired oobCode:', error.message);
+          });
+      }
     }
   }
 

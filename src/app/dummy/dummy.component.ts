@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dummy.component.html',
   styleUrls: ['./dummy.component.css'],
 })
-export class DummyComponent implements OnInit {
+export class DummyComponent  {
   id: any = undefined;
 
   constructor(
@@ -30,10 +30,4 @@ export class DummyComponent implements OnInit {
 height adjustment of the textarea element using Angular CDK's cdkTextareaAutosize
 directive. As the text grows and wraps inside the textarea, you will see
 .`;
-  ngOnInit(): void {
-    this.id = 'kO1FgzJ982QwcY81etQ9';
-
-    console.log(this.id);
-    this.sidebarservice.getdatabyid(this.id).then(() => {});
-  }
 }
