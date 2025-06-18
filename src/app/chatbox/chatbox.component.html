@@ -1,0 +1,73 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center">
+  <div
+    class="relative w-full max-w-md h-[90vh] bg-white rounded-xl shadow-lg p-4 flex flex-col"
+  >
+    <!-- Close Button -->
+    <button
+      class="text-red-500 hover:text-gray-800 text-3xl absolute top-2 right-4"
+      (click)="closeChatbox()"
+    >
+      &times;
+    </button>
+
+    <!-- Title -->
+    <h2 class="text-xl font-semibold text-center mb-2 mt-6">Chat Box</h2>
+
+    <!-- Select user -->
+    <label for="userSelect" class="block mb-1 text-sm text-gray-700"
+      >Chat with:</label
+    >
+    <select
+      id="userSelect"
+      [(ngModel)]="selectedUser"
+      (click)="getmessage()"
+      class="w-full mb-4 p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+    >
+      <option [ngValue]="null" disabled>Select a user</option>
+      <option *ngFor="let user of users" [ngValue]="user">
+        {{ user }}
+      </option>
+    </select>
+
+    <!-- Messages -->
+    <div
+      *ngIf="selectedUser"
+      class="flex-1 overflow-y-auto space-y-2 px-1 border rounded p-2 mb-2 bg-gray-50"
+    >
+      <div *ngFor="let msg of messages">
+        <div
+          [ngClass]="{
+            'flex justify-end': msg.sender === currentUser,
+            'flex justify-start': msg.sender !== currentUser
+          }"
+        >
+          <div
+            [ngClass]="{
+              'bg-blue-600 text-white': msg.sender === currentUser,
+              'bg-gray-200 text-gray-800': msg.sender !== currentUser
+            }"
+            class="p-3 rounded-2xl max-w-xs break-words"
+          >
+
+            <span class="text-sm">{{ msg.content }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="mt-2 flex gap-2" *ngIf="selectedUser">
+      <input
+        [(ngModel)]="messageText"
+        class="flex-1 border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Type your message..."
+      />
+      <button
+        (click)="sendMessage()"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+</div>

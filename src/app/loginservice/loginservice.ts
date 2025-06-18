@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { getAuth, createUserWithEmailAndPassword, User } from 'firebase/auth';
+import { signInWithEmailAndPassword } from '@angular/fire/auth';
 
 import {
   collectionData,
@@ -19,11 +20,14 @@ import {
 } from '@firebase/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+
 
 @Injectable({ providedIn: 'root' })
 export class SidebarService {
-  constructor(private router: Router) {}
+  constructor(private router: Router , private auth: Auth) {}
   userid: string = '';
+  mail: string = '';
   firestore = inject(Firestore);
   toolscollection = collection(this.firestore, 'resumedata');
   private sidebarData = new BehaviorSubject<any>(null);
@@ -33,6 +37,7 @@ export class SidebarService {
   private id = new BehaviorSubject<any>(null);
   private signinemail = new BehaviorSubject<any>(null);
   private resetpasswordmail = new BehaviorSubject<any>(null);
+  private chatboxopen = new BehaviorSubject<any>(null);
 
   sidebarData$ = this.sidebarData.asObservable();
   email$ = this.email.asObservable();
@@ -41,6 +46,10 @@ export class SidebarService {
   id$ = this.id.asObservable();
   signinemail$ = this.signinemail.asObservable();
   resetpasswordmail$ = this.resetpasswordmail.asObservable();
+  chatboxopen$ = this.chatboxopen.asObservable();
+
+  
+
 
   sendData(data: any) {
     this.sidebarData.next(data);
@@ -48,6 +57,7 @@ export class SidebarService {
 
   sendemail(data: any) {
     this.email.next(data);
+    this.mail = data;
   }
 
   sendpreviewdata(data: any) {
@@ -69,6 +79,7 @@ export class SidebarService {
     this.userid = addoc.id;
     return addoc;
   }
+ 
 
   async deleteresume() {
     if (!this.userid) {
@@ -83,6 +94,12 @@ export class SidebarService {
     password: string,
     id?: string
   ): Promise<any> {
+    const userCredential = await signInWithEmailAndPassword(
+      this.auth,
+      email,
+      password
+    );
+
     const usersRef = collection(this.firestore, 'resumedata');
 
     const userid = doc(this.firestore, "userid's", email);
@@ -245,5 +262,19 @@ export class SidebarService {
     } else {
       console.error('User not found with that email.');
     }
+  }
+
+  chatboxfun(value: any) {
+    this.chatboxopen.next(value);
+    console.log(value);
+  }
+
+  async emailsget(): Promise<any> {
+    const usersRef = collection(this.firestore, "userid's");
+    const snapshot = await getDocs(usersRef);
+    const ids = snapshot.docs.map((doc) => doc.id);
+    const filteredIds = ids.filter((id) => id !== this.mail);
+
+    return filteredIds;
   }
 }

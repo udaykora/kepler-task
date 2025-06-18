@@ -11,6 +11,7 @@ import { SidebarService } from '../loginservice/loginservice';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { Auth, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-sidebar',
@@ -36,7 +37,11 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  constructor(private sidebarService: SidebarService, private router: Router) {}
+  constructor(
+    private sidebarService: SidebarService,
+    private router: Router,
+    private auth: Auth
+  ) {}
 
   loginopen = false;
   islogged = false;
@@ -60,9 +65,18 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  chatboxopen() {
+    if (this.email == undefined) {
+      this.sidebarService.sendData(true);
+    } else {
+      this.sidebarService.chatboxfun(true);
+    }
+  }
+
   removeemailfun() {
     this.sidebarService.sendemail(undefined);
     this.email = undefined;
+    signOut(this.auth);
 
     setTimeout(() => {
       this.sidebarService.email$.subscribe((data) => {

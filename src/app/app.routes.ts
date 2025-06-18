@@ -4,6 +4,7 @@ import { ResumeComponent } from './resume/resume.component';
 import { PostajobComponent } from './postajob/postajob.component';
 import { DummyComponent } from './dummy/dummy.component';
 import { RpComponent } from './rp/rp.component';
+import { ChatboxComponent } from './chatbox/chatbox.component';
 
 export const routes: Routes = [
   {
@@ -40,4 +41,8 @@ export const routes: Routes = [
     component: PostajobComponent,
   },
   { path: 'rp', component: RpComponent },
+  {
+    path: 'chatbox',
+    component: ChatboxComponent,
+  },
 ];

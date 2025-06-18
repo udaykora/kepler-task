@@ -10,6 +10,7 @@ import { PracticeComponent } from './practice/practice.component';
 import { PostajobComponent } from './postajob/postajob.component';
 import { SigninComponent } from './signin/signin.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { ChatboxComponent } from './chatbox/chatbox.component';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarService } from './loginservice/loginservice';
@@ -28,6 +29,7 @@ import { SidebarService } from './loginservice/loginservice';
     PostajobComponent,
     SigninComponent,
     ResetpasswordComponent,
+    ChatboxComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit, DoCheck {
   check: any = 'ff';
   signinformopen: any = false;
   resetformopen: any = false;
+  chatboxopen: any = false;
 
   ngDoCheck(): void {}
 
@@ -64,6 +67,13 @@ export class AppComponent implements OnInit, DoCheck {
           this.resetformopen = false;
         }
       });
+    });
+
+    this.sidebarService.chatboxopen$.subscribe((data) => {
+      if (data == true) {
+        this.chatboxopen = true;
+      }
+      else this.chatboxopen = false
     });
   }
 
